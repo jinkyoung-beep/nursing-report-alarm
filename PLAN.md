@@ -29,3 +29,5 @@ PRD.md에 정의된 must 기능 2개(신고 항목 등록·관리, 알림 발송
 11. 매일 한국시간(KST) 오전 9시에 알림 조건을 확인해 이메일을 보내는 자동 실행 기능 만들기 (`CRON_SECRET`으로 요청 검증)
 12. 처리 완료 표시된 항목은 이후 알림이 가지 않는지 확인하는 예외 처리 넣기
 13. Vercel 배포 및 환경 변수 설정하기 (`APP_PASSWORD`, `GMAIL_USER`/`GMAIL_APP_PASSWORD`, `NOTIFY_TO_EMAIL`, `SUPABASE_URL`/`SUPABASE_ANON_KEY`, `CRON_SECRET` 등 확인)
+
+(2026-09-04 진행: 9~11번 구현 완료. `lib/notification-schedule.ts`(알림 유형별 D-day 판단 + 주말/공휴일 보정), `lib/mailer.ts`(Gmail 앱 비밀번호 발송), `app/api/cron/notify/route.ts`(`CRON_SECRET` 검증 후 발송·`last_notified_on` 갱신), `vercel.json`(매일 UTC 0시 = KST 9시 Cron)을 추가했다. `GMAIL_USER`/`GMAIL_APP_PASSWORD`가 아직 `.env`에 비어 있어 실제 발송 테스트는 값 입력 후 진행 예정.)
