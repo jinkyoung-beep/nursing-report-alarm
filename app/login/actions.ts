@@ -27,3 +27,9 @@ export async function login(
 
   redirect("/");
 }
+
+export async function logout() {
+  const cookieStore = await cookies();
+  cookieStore.delete(AUTH_COOKIE_NAME);
+  redirect("/login");
+}

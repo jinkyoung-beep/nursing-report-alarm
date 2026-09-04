@@ -2,6 +2,7 @@ import Link from "next/link";
 import NetworkMeshBackground from "@/components/NetworkMeshBackground";
 import AlarmIllustration from "@/components/AlarmIllustration";
 import DeleteReportButton from "@/components/DeleteReportButton";
+import { logout } from "@/app/login/actions";
 import { getSupabaseClient } from "@/lib/supabase";
 import { getNotificationType } from "@/lib/notification-type";
 import { daysUntil, formatDday } from "@/lib/report-schedule";
@@ -99,6 +100,14 @@ export default async function Home() {
             >
               새 항목 추가
             </Link>
+            <form action={logout}>
+              <button
+                type="submit"
+                className="rounded-full border border-border-soft px-4 py-2 text-xs font-medium text-muted transition-colors hover:text-foreground"
+              >
+                로그아웃
+              </button>
+            </form>
           </div>
         </div>
 
