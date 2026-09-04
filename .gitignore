@@ -48,3 +48,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# 이 프로젝트와 무관한 별도 폴더 (커밋/배포 용량만 키우므로 제외)
+/ollama-rag-gui
