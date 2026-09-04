@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 간호인력 신고 알리미
 
-## Getting Started
+병원 간호인력 관련 신고(간호인력 차등제, 간호간병통합서비스 정기·수시신고, 제2차 간호사 교대제 개선 시범사업 등)는 항목마다 제출 시기가 제각각이라 담당자가 매번 직접 기억해서 챙겨야 했습니다. 이 앱은 등록해둔 신고 일정을 기준으로 정해진 시점에 이메일로 알려주는 개인용 알림 도구입니다.
 
-First, run the development server:
+## 주요 기능
+
+- **신고 항목 등록·관리**: 정기형(매월/2개월/분기/6개월/연 1회/30일/비정기 주기) 및 수시형(개별 발생일 기준) 신고 항목을 등록하고, 목록에서 카테고리별로 확인
+- **엑셀 일괄 업로드**: 신고 항목명·유형·시작일·반복 주기·발생일·메모 열만 읽어 등록 (그 외 개인정보 열은 읽지 않음)
+- **완료 처리 및 다음 일정 자동 계산**: 신고를 완료 처리하면 반복 주기에 맞춰 다음 시작일을 자동으로 갱신
+- **알림 유형 자동 판정**: 신고 항목명을 기준으로 기본/예외/특수/준비 알림 유형을 시스템이 자동으로 정함 (사용자가 직접 고르지 않음)
+- **주말·공휴일 알림 조정**: 알림 예정일이 주말이나 한국 공휴일과 겹치면, 그 구간 바로 직전 평일과 직후 평일로 나누어 알림 발송
+- **비밀번호 로그인**: 본인 1인 전용 접근 제한
+
+## 개인정보 처리 원칙
+
+- 엑셀 업로드 시 지정된 열(신고 항목명·시작일·반복 주기 등)만 읽어서 저장하고, 그 외 열(주민등록번호·이름 등)은 읽지도 저장하지도 않습니다.
+- 간호인력 개인의 주민등록번호는 어떤 경우에도 이 앱의 데이터베이스에 저장하지 않습니다.
+
+## 기술 스택
+
+- [Next.js](https://nextjs.org) (App Router) — 화면과 서버(Server Actions)를 한 프로젝트에서 처리
+- [Supabase](https://supabase.com) — 신고 항목 데이터 저장
+- [xlsx](https://www.npmjs.com/package/xlsx) — 엑셀 업로드 파싱
+- [date-holidays](https://www.npmjs.com/package/date-holidays) — 한국 공휴일 판단
+- Gmail 앱 비밀번호 — 이메일 알림 발송 (예정)
+- [Vercel](https://vercel.com) — 배포 및 Cron Jobs(매일 자동 알림 확인, 예정)
+
+## 개발 문서
+
+- [PRD.md](./PRD.md) — 서비스 기획서 (요구사항, 신고 항목·알림 규칙 정의)
+- [PLAN.md](./PLAN.md) — 개발 작업 순서
+- [DESIGN.md](./DESIGN.md) — 화면 구성, 데이터 흐름, 디자인 톤앤매너
+- [CLAUDE.md](./CLAUDE.md) — 프로젝트 규칙
+
+## 로컬 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env` 파일에 아래 값이 필요합니다 (저장소에는 포함되어 있지 않습니다):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+APP_PASSWORD=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+NOTIFY_TO_EMAIL=
+CRON_SECRET=
+GMAIL_USER=
+GMAIL_APP_PASSWORD=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 개인용 프로젝트 안내
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+이 앱은 특정 병원 담당자 1인의 개인 업무를 돕기 위해 만들어진 개인용 도구입니다. 여러 사용자 계정 관리, 신고 자동 제출·연동, 통계 기능은 포함하지 않습니다.
