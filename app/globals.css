@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* DESIGN.md 4번 "디자인 톤앤매너" 참고 — 짙은 네이비 배경 + 밝은 파란 포인트 (기술적인 느낌의 다크 테마) */
+:root {
+  --background: #16213e;
+  --surface: #1f2c4f;
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --foreground: #eef2fb;
+  --muted: #a9b8dc;
+  --accent: #5b8def;
+  --accent-strong: #2f5fd0;
+  --accent-soft: #2a3b66;
+  --accent-contrast: #f8fafd;
+  --danger: #ff6b5b;
+  /* 배경의 그물망 장식에서만 쓰는 보조 그라데이션 색 (분홍빛) */
+  --accent-alt: #d966a3;
+
+  /* 목록 화면에서 카테고리 제목을 구분하는 색 (report-category.ts와 짝) */
+  --category-cheungdeungje: #e0a458;
+  --category-ganhoganbyeong: #4fd1a5;
+  --category-gyodaeje: #b48cf2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-border-soft: var(--border-soft);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-danger: var(--danger);
+  --color-category-cheungdeungje: var(--category-cheungdeungje);
+  --color-category-ganhoganbyeong: var(--category-ganhoganbyeong);
+  --color-category-gyodaeje: var(--category-gyodaeje);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* 이 앱은 1인 전용이라 다크 테마 하나로 고정하고, 밝은(라이트) 모드는 따로 만들지 않는다 */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
